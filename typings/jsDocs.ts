@@ -14,6 +14,9 @@ type CookieJar = {
  * NobloxOptions for setOptions, based from settings.json
  */
 type NobloxOptions = {
+    /** Prints console warnings for functions that are being polyfilled by newer methods due to upstream Roblox API changes */
+    show_deprecation_warnings: boolean;
+
     /** Minimizes data usage and speed up requests by only saving session cookies, disable if you need other cookies to be saved as well. (Default: true) */
     session_only: boolean;
 
@@ -197,27 +200,9 @@ type GamePassProductInfo = Omit<ProductInfo, "ContentRatingTypeId" | "SaleAvaila
 /**
  * @typedef
 */
-type BuyProductInfo = {
-    ProductId: number;
-    Creator: { Id: number };
-    PriceInRobux: number;
-    UserAssetId: number;
-}
-
-/**
- * @typedef
-*/
 type PriceRange = {
     high: number;
     low: number;
-}
-
-/**
- * @typedef
-*/
-type BuyAssetResponse = {
-    productId: number;
-    price: number;
 }
 
 /**
@@ -1374,10 +1359,18 @@ type LoggedInUserData = {
     UserID: number,
     UserName: string,
     RobuxBalance: number,
-    TicketsBalance: number,
     ThumbnailUrl: string,
-    IsAnyBuildersClubMember: boolean,
+    IsAnyBuildersClubMember: false,
     IsPremium: boolean
+}
+
+/**
+ * @typedef
+*/
+type AuthenticatedUserData = {
+    id: number;
+    name: string;
+    displayName: string;
 }
 
 /**
@@ -1501,6 +1494,13 @@ type UserEntry = {
 /**
  * @typedef
 */
+type UsernameHistoryEntry = {
+    name: string;
+}
+
+/**
+ * @typedef
+*/
 type PrivateMessageParent = {
     page: number;
 }
@@ -1561,8 +1561,20 @@ type PlayerInfo = {
     friendCount?: number;
     followerCount?: number;
     followingCount?: number;
-    oldNames?: Array<string>;
     isBanned: boolean;
+}
+
+/**
+ * @typedef
+*/
+type UserInfo = {
+    description: string;
+    created: Date;
+    isBanned: boolean;
+    hasVerifiedBadge: boolean;
+    id: number;
+    name: string;
+    displayName: string;
 }
 
 /**
@@ -1590,6 +1602,14 @@ type PromotionChannelsResponse = {
     youtube?: string;
     twitch?: string;
     guilded?: string;
+}
+
+type UserSearchResult = {
+    previousUsernames: string[];
+    hasVerifiedBadge: boolean;
+    id: number;
+    name: string;
+    displayName: string;
 }
 
 /// Badges
